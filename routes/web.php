@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\Todo;
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,16 +20,19 @@ Route::get('/now', function () {
 });
 
 Route::get('/todos', function () {
-    $todos = [
-        ['title' => 'buy vegetables', 'done' => false],
-        ['title' => 'eating', 'done' => true],
-        ['title' => 'learning php', 'done' => false],
-    ];
-
+    $todos = Todo::orderByDesc('id')->get();
     return view('todos.index', ['todos' => $todos]);
 });
 
 Route::post('/todos', function () {
-    dd(request()->all());
-});
+    $data = request()->validate([
+        'title' => ['required', 'string', 'max:200'],
+    ]);
 
+    Todo::create([
+        'title' => $data['title'],
+        'done' => false,
+    ]);
+
+    return redirect('/todos');
+});

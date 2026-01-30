@@ -9,15 +9,15 @@
         <p>No todos yet.</p>
     @else
         <ul>
-            @foreach ($todos as $todo)
-                <li>
-                    @if ($todo['done'])
-                        <s>{{ $todo['title'] }}</s>
-                    @else
-                        {{ $todo['title'] }}
-                    @endif
-                </li>
-            @endforeach
+          @foreach ($todos as $todo)
+            <li>
+              @if ($todo->done)
+                <s>{{ $todo->title }}</s>
+              @else
+                {{ $todo->title }}
+              @endif
+            </li>
+          @endforeach
         </ul>
     @endif
 
