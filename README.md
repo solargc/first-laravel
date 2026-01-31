@@ -8,9 +8,12 @@ A minimal Todo app built to learn Laravel, PHP, and SQLite.
 - Practice PHP in a real project
 - Understand database connections and migrations
 
-## Current Status
+## Incredible features
 
 - Add a todo
+- Done/Undo task
+- Delete a todo
+- Night mode following system default
 
 ## Screenshot
 

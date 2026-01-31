@@ -1,38 +1,41 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 use App\Models\Todo;
 
+
 Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/hi', function () {
-    return "Hi first! Is this a route?";
-});
-
-Route::get('/hello', function () {
-    return view('hello');
-});
-
-Route::get('/now', function () {
-    return now()->toDateTimeString();
+    return redirect('/todos');
 });
 
 Route::get('/todos', function () {
-    $todos = Todo::orderByDesc('id')->get();
-    return view('todos.index', ['todos' => $todos]);
-});
+    $todos = Todo::latest()->get();
+    return view('todos.index', compact('todos'));
+})->name('todos.index');
 
-Route::post('/todos', function () {
-    $data = request()->validate([
+Route::post('/todos', function (Request $request) {
+    $data = $request->validate([
         'title' => ['required', 'string', 'max:200'],
     ]);
 
     Todo::create([
         'title' => $data['title'],
-        'done' => false,
+        'completed' => false,
     ]);
 
-    return redirect('/todos');
+    return redirect()->route('todos.index');
+})->name('todos.store');
+
+Route::post('/todos/{todo}/toggle', function (Todo $todo) {
+    $todo->completed = ! $todo->completed;
+    $todo->save();
+
+    return redirect()->route('todos.index');
 });
+
+Route::delete('/todos/{todo}', function (Todo $todo) {
+    $todo->delete();
+
+    return redirect()->route('todos.index');
+})->name('todos.destroy');

@@ -5,7 +5,7 @@
 @section('content')
     <div class="flex items-baseline justify-between gap-4">
         <h1 class="text-xl font-semibold tracking-tight">
-            <span class="text-grey-700 dark:text-violet-300">Todos</span>
+            <span class="text-grey-700 dark:text-violet-300">Todos at first-laravel</span>
         </h1>
 
         <span class="text-sm text-gray-500 dark:text-gray-400">
@@ -45,21 +45,51 @@
     @endif
 
     <ul class="mt-6 overflow-hidden rounded-lg border-3 border-violet-100/100 dark:border-violet-900/30">
-        @forelse ($todos as $todo)
-            <li
-                class="
-                    px-4 py-3 text-sm
-                    {{ $loop->odd
-                        ? 'bg-gray-50 dark:bg-gray-900'
-                        : 'bg-violet-100/100 dark:bg-violet-900/30'
-                    }}
-                "
-            >
-                <span class="{{ $todo->done ? 'text-gray-400 line-through' : '' }}">
-                    {{ $todo->title }}
-                </span>
-            </li>
-        @empty
+            @forelse ($todos as $todo)
+                <li
+                    class="
+                        flex items-center justify-between gap-3 px-4 py-3 text-sm
+                        {{ $loop->odd
+                            ? 'bg-gray-50 dark:bg-gray-900'
+                            : 'bg-violet-100/100 dark:bg-violet-900/30'
+                        }}
+                    "
+                >
+                    <span class="{{ $todo->completed ? 'text-gray-400 line-through' : '' }}">
+                        {{ $todo->title }}
+                    </span>
+
+                    <div class="flex items-center gap-2">
+                        <form method="POST" action="/todos/{{ $todo->id }}/toggle">
+                            @csrf
+
+                            <button
+                                type="submit"
+                                class="text-xs rounded-md px-2 py-1
+                                       border border-transparent
+                                       text-gray-500 hover:text-violet-600
+                                       dark:text-gray-400 dark:hover:text-violet-300"
+                            >
+                                {{ $todo->completed? 'Undo' : 'Done' }}
+                            </button>
+                        </form>
+
+                            <form method="POST" action="/todos/{{ $todo->id }}">
+                            @csrf
+                            @method('DELETE')
+
+                            <button
+                                type="submit"
+                                class="text-xs rounded-md px-2 py-1
+                                       text-gray-400 hover:text-orange-600
+                                       dark:hover:text-orange-400"
+                            >
+                                Delete
+                            </button>
+                        </form>
+                    </div>
+                </li>
+            @empty
             <li class="px-4 py-8 text-sm text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-900">
                 No todos yet.
             </li>
