@@ -1,4 +1,4 @@
-# First-Laravel
+# first-laravel
 
 A minimal Todo app built to learn Laravel, PHP, and SQLite.
 
@@ -18,6 +18,10 @@ A minimal Todo app built to learn Laravel, PHP, and SQLite.
 ## Screenshot
 
 ![Screenshot](first-laravel.png)
+
+## Notes
+
+- Some sections were llm-generated to focus on the learning goals.
 
 ## License
 
