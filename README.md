@@ -15,6 +15,25 @@ A minimal Todo app built to learn Laravel, PHP, and SQLite.
 - Delete a todo
 - Night mode following system default
 
+## Usage
+
+Start the Laravel development server and the Vite dev server (for Tailwind).
+
+```sh
+php artisan serve
+npm run dev
+```
+
+Run the database migrations.
+```sh
+php artisan migrate
+```
+
+If you are using Nix, a dev shell with php, composer, tailwind, nodejs and sqlite is provided.
+```sh
+nix-shell
+```
+
 ## Screenshot
 
 ![Screenshot](first-laravel.png)
